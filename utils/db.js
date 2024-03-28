@@ -1,15 +1,24 @@
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
-const uri =
-  "mongodb+srv://eshak-test:KlK2G0IOukgSIgTK@eshak.3xgcckf.mongodb.net/?retryWrites=true&w=majority&appName=eshak";
-const client = new MongoClient(uri);
+const client = new MongoClient(process.env.DB_URI);
 
-async function run() {
+async function dbConnect() {
   try {
     await client.connect();
-    const db = client.db("admin");
-  } finally {
-    await client.close();
+  } catch (e) {
+    console.error(e);
   }
 }
-run().catch(console.dir);
+async function dbClose() {
+  try {
+    await client.close();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+module.exports = {
+  dbConnect,
+  dbClose,
+  db: client.db("practice"),
+};
