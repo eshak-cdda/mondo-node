@@ -19,7 +19,7 @@ const addUser = async (req, res) => {
   try {
     await dbConnect();
     await db.collection("users").insertOne(req.body);
-    res.status(201).json({ message: "User added successfully" });
+    res.status(201).json({ message: "user added successfully" });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: error.message });
